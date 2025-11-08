@@ -1,0 +1,391 @@
+= Galaga Emulator
+:toc:
+:sectnums:
+:experimental:
+ifndef::env-github[:icons: font]
+:note-caption: :paperclip:
+:important-caption: :exclamation:
+:warning-caption: :warning:
+
+[IMPORTANT]
+====
+The commits in this branch are highly unstable. I rebase and force push at will.
+
+The commit history may be rewritten without notice.
+====
+
+== Galaga Emulator
+
+=== GitHub
+
+Source::
+https://github.com/Justin-Credible/galaga-emulator
+
+Fork::
+https://github.com/hghpublic/Justin-Credible-galaga-emulator
+
+=== Screenshot
+
+TBD
+
+=== Build & Run
+
+[source, bash]
+----
+./build.sh
+./run.sh
+----
+
+=== Pac-Man Emulator
+
+https://github.com/Justin-Credible/pac-man-emulator
+
+=== Space Invaders Emulator
+
+https://github.com/Justin-Credible/space-invaders-emulator
+
+== zasm
+
+https://k1.spdns.de/Develop/Projects/zasm/Distributions/
+
+https://github.com/Megatokio/zasm
+
+The path to the `zasm` executable is hardcoded in file `z80.tests/Misc/BaseTest.cs` in method `BaseTest.GetAssemblerBinaryPath()`.
+
+----
+private static String GetAssemblerBinaryPath()
+{
+   if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+         return "../../../../assembler/zasm-4.2.4-Linux64/zasm";
+   else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+         return "../../../../assembler/zasm-4.2.4-macos10.12/zasm";
+   else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+         throw new Exception("The zasm assembler is not available for Windows; try using the Windows Subsystem for Linux (WSL).");
+   else
+         throw new Exception("The zasm assembler is not available this platform.");
+}
+----
+
+== Computer Archeology
+
+https://computerarcheology.com/Arcade/Galaga/
+
+
+== PixelatedArcade
+
+https://pixelatedarcade.com/games/galaga
+
+
+== dotnet
+
+https://dotnet.microsoft.com/en-us/
+
+https://github.com/dotnet/dotnet
+
+=== environment
+
+----
+$ dotnet --version
+9.0.306
+----
+
+== vscode
+
+https://code.visualstudio.com/docs/csharp/get-started
+
+https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csdevkit
+
+== .Net
+
+Upgrade to a new .NET version
+
+https://learn.microsoft.com/en-us/dotnet/core/install/upgrade
+
+Install .NET on Ubuntu decision guide
+
+https://learn.microsoft.com/en-us/dotnet/core/install/linux-ubuntu-decision?source=recommendations
+
+
+
+== crc32
+
+----
+$ sudo apt install libarchive-zip-perl
+
+# galaga.zip
+# MAME ROM Set: galaga
+# MAME ROM Set: galagao
+$ for f in gg1*.*; do echo "$f\t $(crc32 $f)"; done 
+gg1_10.4f        dd6f1afc
+gg1_11.4d        ad447c80
+gg1_1b.3p        ab036c9f
+gg1_2b.3m        d9232240
+gg1_3.2m         753ce503
+gg1_4b.2l        499fcc76
+gg1_5b.3f        bb5caae3
+gg1_7b.2c        d016686b
+gg1_9.4l         58b2f47c
+
+$ for f in prom-*.*; do echo "$f\t $(crc32 $f)"; done
+prom-1.1d        7a2815b4
+prom-2.5c        77245b66
+prom-3.1c        4a04bb6b
+prom-4.2n        59b6edab
+prom-5.5n        54603c6b
+
+$ for f in *.bin; do echo "$f\t $(crc32 $f)"; done 
+51xx.bin         c2f57ef8
+54xx.bin         ee7357e0
+----
+
+== Stash
+
+[Breaking change]: CommandLineUtils retired #477
+
+
+https://github.com/aspnet/Announcements/issues/477
+
+
+https://github.com/natemcmaster/CommandLineUtils
+
+https://github.com/dotnet/command-line-api
+
+https://www.nuget.org/packages/McMaster.Extensions.CommandLineUtils/
+
+Previous behavior::
++
+----
+using Microsoft.Extensions.CommandLineUtils;
+----
+New behavior::
++
+----
+using McMaster.Extensions.CommandLineUtils;
+----
+
+
+== run
+
+
+----
+vscode ➜ /workspaces/Justin-Credible-galaga-emulator/emulator.cli (dev) $ dotnet run -- run --help
+
+
+Usage: galagaemu run [arguments] [options]
+
+Arguments:
+  [ROM path]  The path to a directory containing the ROM set to load.
+
+Options:
+  -?|-h|--help            Show help information
+  -rs|--rom-set           The name of an alternative ROM set and/or PCB configuration to use; galaga[o|mw|mk|mf]; defaults to galaga
+  -dw|--dip-switches      The path to a JSON file containing DIP switch settings; defaults to dip-switches.json in CWD.
+  -l|--load-state         Loads an emulator save state from the given path.
+  -sc|--skip-checksums    Allow running a ROM with invalid checksums.
+  -wr|--writable-rom      Allow memory writes to the ROM address space.
+  -d|--debug              Run in debug mode; enables internal statistics and logs useful when debugging.
+  -b|--break              Used with debug, will break at the given address (on any CPU) and allow single stepping opcode execution (e.g. --break 0x0248)
+  -b1|--break-cpu1        Used with debug, will break at the given address (on CPU1) and allow single stepping opcode execution (e.g. --break 0x0248)
+  -b2|--break-cpu2        Used with debug, will break at the given address (on CPU2) and allow single stepping opcode execution (e.g. --break 0x0248)
+  -b3|--break-cpu3        Used with debug, will break at the given address (on CPU3) and allow single stepping opcode execution (e.g. --break 0x0248)
+  -rvs|--reverse-step     Used with debug, allows for single stepping in reverse to rewind opcode execution.
+  -a1|--annotations-cpu1  Used with debug, a path to a text file containing memory address annotations for interactive debugging (line format: 1234: .... ; Annotation) for CPU1
+  -a2|--annotations-cpu2  Used with debug, a path to a text file containing memory address annotations for interactive debugging (line format: 1234: .... ; Annotation) for CPU2
+  -a3|--annotations-cpu3  Used with debug, a path to a text file containing memory address annotations for interactive debugging (line format: 1234: .... ; Annotation) for CPU3
+
+----
+
+
+== build
+
+https://www.nuget.org/packages/sixlabors.imagesharp/
+
+----
+dotnet add package SixLabors.ImageSharp --version 3.1.12
+----
+
+https://www.nuget.org/packages/Newtonsoft.Json
+
+----
+dotnet add package Newtonsoft.Json --version 13.0.4
+----
+
+----
+$ dotnet build
+Restore complete (1.1s)
+  z80 succeeded (0.3s) → z80/bin/Debug/net9.0/z80.dll
+  disassembler succeeded (0.1s) → disassembler/bin/Debug/net9.0/disassembler.dll
+  emulator succeeded (0.2s) → emulator/bin/Debug/net9.0/emulator.dll
+  z80.tests succeeded (0.3s) → z80.tests/bin/Debug/net9.0/z80.tests.dll
+  emulator.cli succeeded (0.1s) → emulator.cli/bin/Debug/net9.0/emulator.cli.dll
+  emulator.tests succeeded (0.2s) → emulator.tests/bin/Debug/net9.0/emulator.tests.dll
+
+Build succeeded in 2.1s
+----
+
+
+== SDL2-CS
+
+https://www.nuget.org/packages/SDL2-CS
+
+----
+dotnet add package SDL2-CS --version 2.0.0
+----
+
+https://github.com/flibitijibibo/SDL2-CS
+
+https://jsayers.dev/c-sharp-sdl-tutorial-part-1-setup/
+
+----
+$ dpkg -L libsdl2-ttf-2.0-0:arm64 
+
+...
+
+/usr/lib/aarch64-linux-gnu/libSDL2_ttf-2.0.so.0.2000.1
+
+...
+
+/usr/lib/aarch64-linux-gnu/libSDL2_ttf-2.0.so.0
+
+$ cd emulator
+$ cp /usr/lib/aarch64-linux-gnu/libSDL2-2.0.so libSDL2.so
+
+$ cd emulator/bin/Debug/net9.0
+$ cp /usr/lib/aarch64-linux-gnu/libSDL2-2.0.so.0 libSDL2.so
+$ cp /usr/lib/aarch64-linux-gnu/libSDL2_mixer-2.0.so.0 libSDL2_mixer.so 
+----
+
+=== Dependencies
+
+----
+$ sudo apt install libsdl2-2.0-0 libsdl2-gfx-1.0-0 libsdl2-image-2.0-0 libsdl2-mixer-2.0-0 libsdl2-ttf-2.0-0
+$ sudo apt install libsdl2-dev libsdl2-gfx-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev
+----
+
+== Issues
+
+https://www.nuget.org/packages/Microsoft.Extensions.CommandlineUtils/
+
+https://github.com/dotnet/command-line-api
+
+----
+dotnet add package Microsoft.Extensions.CommandLineUtils --version 1.1.1
+----
+
+McMaster.Extensions.CommandLineUtils 4.1.1
+
+https://www.nuget.org/packages/McMaster.Extensions.CommandLineUtils/
+
+
+----
+
+2025-11-09 01:35:41.948 [info] Locating .NET runtime version 9.0.1
+2025-11-09 01:35:41.963 [info] Dotnet path: /usr/share/dotnet/dotnet
+2025-11-09 01:35:41.963 [info] Activating C# + C# Dev Kit + C# IntelliCode...
+2025-11-09 01:35:42.088 [info] [stdout] info: Program[0]
+      Server started with process ID 1947
+
+2025-11-09 01:35:42.480 [info] [stdout] fail: Microsoft.CodeAnalysis.Remote.ExportProviderBuilder[0]
+      Encountered errors in the MEF composition:
+      ----- CompositionError level 1 ------
+      Microsoft.VisualStudio.Copilot.Roslyn.Completion.CSharpMemberAccessSymbolBlueprintProvider.ctor(joinableTaskContext): expected exactly 1 export matching constraints:
+          Contract name: Microsoft.VisualStudio.Threading.JoinableTaskContext
+          TypeIdentityName: Microsoft.VisualStudio.Threading.JoinableTaskContext
+      but found 0.
+         part definition Microsoft.VisualStudio.Copilot.Roslyn.Completion.CSharpMemberAccessSymbolBlueprintProvider
+      
+      Microsoft.CodeAnalysis.ExternalAccess.Copilot.Internal.SemanticSearch.CopilotSemanticSearchQueryExecutor.ctor(workspaceProvider): expected exactly 1 export matching constraints:
+          Contract name: Microsoft.CodeAnalysis.Host.IHostWorkspaceProvider
+          TypeIdentityName: Microsoft.CodeAnalysis.Host.IHostWorkspaceProvider
+      but found 0.
+         part definition Microsoft.CodeAnalysis.ExternalAccess.Copilot.Internal.SemanticSearch.CopilotSemanticSearchQueryExecutor
+      
+      Microsoft.VisualStudio.Copilot.Roslyn.Completion.CSharpMethodCallerBlueprintProvider.ctor(joinableTaskContext): expected exactly 1 export matching constraints:
+          Contract name: Microsoft.VisualStudio.Threading.JoinableTaskContext
+          TypeIdentityName: Microsoft.VisualStudio.Threading.JoinableTaskContext
+      but found 0.
+         part definition Microsoft.VisualStudio.Copilot.Roslyn.Completion.CSharpMethodCallerBlueprintProvider
+      
+      Microsoft.CodeAnalysis.ExternalAccess.Copilot.Internal.CodeMapper.CSharpMapCodeService.ctor(service): expected exactly 1 export matching constraints:
+          Contract name: Microsoft.CodeAnalysis.ExternalAccess.Copilot.CodeMapper.ICSharpCopilotMapCodeService
+          TypeIdentityName: Microsoft.CodeAnalysis.ExternalAccess.Copilot.CodeMapper.ICSharpCopilotMapCodeService
+      but found 0.
+         part definition Microsoft.CodeAnalysis.ExternalAccess.Copilot.Internal.CodeMapper.CSharpMapCodeService
+      
+      Microsoft.VisualStudio.Copilot.Roslyn.Completion.CSharpReferencedSymbolDefinitionSnippetProvider.ctor(joinableTaskContext): expected exactly 1 export matching constraints:
+          Contract name: Microsoft.VisualStudio.Threading.JoinableTaskContext
+          TypeIdentityName: Microsoft.VisualStudio.Threading.JoinableTaskContext
+      but found 0.
+         part definition Microsoft.VisualStudio.Copilot.Roslyn.Completion.CSharpReferencedSymbolDefinitionSnippetProvider
+      
+      Microsoft.CodeAnalysis.ExternalAccess.Pythia.PythiaSignatureHelpProvider.ctor(implementation): expected exactly 1 export matching constraints:
+          Contract name: Microsoft.CodeAnalysis.ExternalAccess.Pythia.Api.IPythiaSignatureHelpProviderImplementation
+          TypeIdentityName: Microsoft.CodeAnalysis.ExternalAccess.Pythia.Api.IPythiaSignatureHelpProviderImplementation
+      but found 0.
+         part definition Microsoft.CodeAnalysis.ExternalAccess.Pythia.PythiaSignatureHelpProvider
+      
+      
+      Microsoft.VisualStudio.Composition.CompositionFailedException: Errors exist in the composition.
+         at Microsoft.VisualStudio.Composition.CompositionConfiguration.ThrowOnErrors()
+         at Microsoft.CodeAnalysis.Remote.ExportProviderBuilder.CheckForAndReportCompositionErrors(CompositionConfiguration configuration, ComposableCatalog catalog) in /_/src/Workspaces/Remote/Core/ExportProviderBuilder.cs:line 208
+
+2025-11-09 01:35:42.572 [info] [stdout] {"pipeName":"/tmp/f46e262e.sock"}
+
+
+----
+
+Issues with C# extension with VS-Code on Arch Linux
+
+https://stackoverflow.com/questions/79786199/issues-with-c-sharp-extension-with-vs-code-on-arch-linux
+
+
+=== git push
+
+disable vscode js-debug auto attach
+
+----
+$ git push       
+node:internal/modules/cjs/loader:1386
+  throw err;
+  ^
+
+Error: Cannot find module '/home/vscode/.vscode-server/data/User/workspaceStorage/fddf73872ed29e42a56a43cfad5060ab/ms-vscode.js-debug/bootloader.js'
+Require stack:
+- internal/preload
+    at Function._resolveFilename (node:internal/modules/cjs/loader:1383:15)
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)
+    at Function._load (node:internal/modules/cjs/loader:1192:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+    at Module.require (node:internal/modules/cjs/loader:1463:12)
+    at node:internal/modules/cjs/loader:1989:12
+    at loadPreloadModules (node:internal/process/pre_execution:733:5)
+    at setupUserModules (node:internal/process/pre_execution:208:5) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [ 'internal/preload' ]
+}
+
+Node.js v22.19.0
+node:internal/modules/cjs/loader:1386
+
+----
+
+
+=== run
+
+----
+$ ./run.sh  
+SDL_WINDOWEVENT_FOCUS_GAINED event fired; but we're in a debug build so we will not set ShouldUnPause = true.
+Write for 06xx Bus interface range 0x7000 - 0x7100 (0x7100) for CPU1 with value 0x10
+Write for 06xx Bus interface range 0x7000 - 0x7100 (0x7100) for CPU1 with value 0x10
+Write for 06xx Bus interface range 0x7000 - 0x7100 (0x7000) for CPU1 with value 0xFF
+Write for flip screen 0xA007 for CPU1 with value 0x01
+Write for 06xx Bus interface range 0x7000 - 0x7100 (0x7100) for CPU1 with value 0xA1
+'IRQ2: motion CPU (CPU2) irq enable/acknowledge' write at address 0x6821 with value for CPU2: 0x01
+Read from 06xx Bus interface range 0x7000 - 0x7100 (0x7100) for CPU1; returning 0x00
+'IRQ2: motion CPU (CPU2) irq enable/acknowledge' write at address 0x6821 with value for CPU2: 0x00
+Unexpected read from range 0x1000 - 01x3FFF (0x10FF) for CPU2; returning 0x00
+Unexpected read from range 0x1000 - 01x3FFF (0x10DF) for CPU2; returning 0x00
+Unexpected read from range 0x1000 - 01x3FFF (0x10DF) for CPU2; returning 0x00
+----
