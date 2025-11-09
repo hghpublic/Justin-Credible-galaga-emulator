@@ -10,12 +10,12 @@
             "request": "launch",
             "preLaunchTask": "build emulator.cli",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/emulator.cli/bin/Debug/netcoreapp3.1/emulator.cli.dll",
+            "program": "${workspaceFolder}/emulator.cli/bin/Debug/net9.0/emulator.cli.dll",
             "args": [
                 "run",
-                "${workspaceFolder}/roms/galagao",
+                "${workspaceFolder}/roms/galaga",
                 "--rom-set",
-                "galagao",
+                "galaga",
                 "--debug",
                 "--annotations-cpu1",
                 "${workspaceFolder}/roms/disassembly/galagao-cpu1.asm",
