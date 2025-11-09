@@ -95,7 +95,7 @@ namespace JustinCredible.GalagaEmu
             SDL.SDL_RenderSetLogicalSize(_gameRendererSurface, width, height);
 
             _targetTicksHz = targetTicskHz;
-
+#if false
             // Setup our audio format.
             SDL.SDL_AudioSpec audioSpec = new SDL.SDL_AudioSpec();
             audioSpec.freq = 96000; // sampling rate
@@ -116,7 +116,7 @@ namespace JustinCredible.GalagaEmu
 
             // Unpause the audio device and so that it will play once samples are queued up.
             SDL.SDL_PauseAudioDevice(_audioDevice, 0);
-
+#endif
             // Attempt to open controllers.
 
             var numJoysticks = SDL.SDL_NumJoysticks();
