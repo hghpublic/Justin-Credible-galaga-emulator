@@ -64,7 +64,9 @@ namespace JustinCredible.GalagaEmu
          */
         public void Initialize(string title, int width = 640, int height = 480, float scaleX = 1, float scaleY = 1, int targetTicskHz = 60)
         {
-            var initResult = SDL.SDL_Init(SDL.SDL_INIT_VIDEO | SDL.SDL_INIT_AUDIO | SDL.SDL_INIT_GAMECONTROLLER);
+            // var initResult = SDL.SDL_Init(SDL.SDL_INIT_VIDEO | SDL.SDL_INIT_AUDIO | SDL.SDL_INIT_GAMECONTROLLER);
+        
+            var initResult = SDL.SDL_Init(SDL.SDL_INIT_VIDEO | SDL.SDL_INIT_GAMECONTROLLER);
 
             if (initResult != 0)
                 throw new Exception(String.Format("Failure while initializing SDL. SDL Error: {0}", SDL.SDL_GetError()));
